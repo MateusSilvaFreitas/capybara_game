@@ -4,13 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Capybara Game</title>
 </head>
 
 <body>
     <div id="app">
-        <div id="game-container"></div>
+        <div id="game-container">
+
+            <div style="display: flex; gap: 10px; position: fixed; top: 500px; right: 50px">
+                <div id="left-buttom" style="width: 75px; height: 75px; background-color: red;"></div>
+                <div id="right-buttom" style="width: 75px; height: 75px; background-color: aqua;"></div>
+                <div id="jump-buttom" style="width: 75px; height: 75px; background-color: blue;"></div>
+            </div>
+        </div>
+        
     </div>
     <script type="module" src="src/main.js"></script>
 </body>
