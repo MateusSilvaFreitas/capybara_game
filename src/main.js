@@ -2,8 +2,11 @@ var platforms;
 var player;
 var cursors;
 var coins;
+var cardCapy;
 var score = 0;
 var scoreText;
+var cardCapyCollected = 0;
+var capyCardCollectedText;
 var bombs;
 var gameOver;
 
@@ -13,6 +16,9 @@ var ballsCount = 2;
 var isPressedRight = false;
 var isPressedLeft = false;
 var isPressedJump = false;
+
+var paused = false;
+var resume = false;
 
 $('#right-buttom').on('mousedown touchstart', function() {
     isPressedRight = true;
@@ -39,15 +45,33 @@ $('#jump-buttom').on('mouseup touchend', function() {
 });
 
 
+function fechar(){
+    if(paused && resume){
+        paused = false;
+        resume = false;
+        const centeredDiv = document.getElementById('centeredDiv');
+        centeredDiv.classList.remove('show');
+        setTimeout(() => {
+            centeredDiv.style.display = 'none';
+            centeredDiv.classList.remove('animate');
+        }, 300);
+        this.scene.resume();
+    }
+};
 
 
-class Example extends Phaser.Scene {
-        preload ()
+
+
+
+
+class CapyGame extends Phaser.Scene {
+    preload ()
         {
-            this.load.image('background', '/img/background-test.png');
+            this.load.image('background', '/img/background.png');
             this.load.image('ground', '/img/ground-test.png');
             this.load.spritesheet('capy', '/img/capy.png', { frameWidth: 60, frameHeight: 48 });
             this.load.spritesheet('coin', '/img/coin.png', { frameWidth: 24 , frameHeight: 25 });
+            this.load.spritesheet('card-capy', '/img/card-capy.png', { frameWidth: 28 , frameHeight: 35 });
             this.load.image('bomb', '/img/bomb.png');
         }
 
@@ -56,21 +80,39 @@ class Example extends Phaser.Scene {
             createBackgroundAndPlatform(this);
             createPlayer(this);
             createCoins(this);
+            createCardCapy(this);
 
             bombs = this.physics.add.group();
-            scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+            scoreText = this.add.text(16, 16, 'Pontos: 0', { fontSize: '32px', fill: '#000' });
+            capyCardCollectedText = this.add.text(380, 16, 'Cartas capivara: 0/14', { fontSize: '32px', fill: '#000' });
 
             cursors = this.input.keyboard.createCursorKeys();
             this.physics.add.collider(player, platforms);
             this.physics.add.collider(coins, platforms);
+            this.physics.add.collider(cardCapy, platforms);
             this.physics.add.collider(bombs, platforms);
             this.physics.add.collider(player, bombs, (player, bomb) => {
-                this.physics.pause();
+                this.scene.pause();
                 player.setTint(0xff0000);
                 player.anims.play('turn');
                 gameOver = true;
             }, null, this);
             this.physics.add.overlap(player, coins, collectCoin, null, this);
+            this.physics.add.overlap(player, cardCapy, (player, card) => {
+                card.disableBody(true, true);
+                cardCapyCollected += 1;
+                capyCardCollectedText.setText('Cartas capivara: ' + cardCapyCollected + "/14");
+                // this.scene.pause();
+
+                // const centeredDiv = document.getElementById('capy-card-'+ cardCapyCollected);
+                // centeredDiv.style.display = 'block';
+                            
+                // requestAnimationFrame(() => {
+                //     centeredDiv.classList.add('show');
+                //     centeredDiv.classList.add('animate');
+                // });
+
+            }, null, this);
         }
 
         update(){
@@ -81,8 +123,8 @@ class Example extends Phaser.Scene {
 
 function collectCoin (player, coin){
     coin.disableBody(true, true);
-    score += 10;
-    scoreText.setText('Score: ' + score);
+    score += 1500;
+    scoreText.setText('Pontos: ' + score);
     if(coins.countActive(true) == 0){
         ballsCount++;
 
@@ -92,8 +134,15 @@ function collectCoin (player, coin){
             if(totalActiveBalls > 0){
                 child.enableBody(true, child.x, 0, true, true);
                 childCoinDefault(child);
+                child.anims.play('rotate', true)
                 totalActiveBalls--;
             }  
+        })
+
+        cardCapy.children.iterate((child) => {
+                child.enableBody(true, child.x, 0, true, true);
+                childCoinDefault(child);
+                child.anims.play('rotate-card-capy', true)
         })
 
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
@@ -183,6 +232,7 @@ const createCoins = (bind) => {
 
     coins.children.iterate(function (child) {
         childCoinDefault(child);
+        child.anims.play('rotate', true)
         if(totalActiveBalls == 0){
             child.disableBody(true, true);
         } else {
@@ -191,11 +241,29 @@ const createCoins = (bind) => {
     });
 }
 
+const createCardCapy = (bind) => {
+    cardCapy = bind.physics.add.group({
+        key: 'card-capy',
+        repeat: 1,
+    });
+
+    bind.anims.create({
+        key: 'rotate-card-capy',
+        frames: bind.anims.generateFrameNumbers('card-capy', { start: 0, end: 9 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    cardCapy.children.iterate(function (child) {
+        childCoinDefault(child);
+        child.anims.play('rotate-card-capy', true)
+    });
+}
+
 const childCoinDefault = (child) => {
     child.setBounce(1);
     child.setVelocity(Phaser.Math.Between(-100, 100), 1);
     child.setCollideWorldBounds(true);
-    child.anims.play('rotate', true)
     child.x = Phaser.Math.Between(0, 800);
     child.y = Phaser.Math.Between(0, 450);
 }
@@ -204,7 +272,7 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: Example,
+    scene: CapyGame,
     physics: {
         default: 'arcade',
         arcade: {

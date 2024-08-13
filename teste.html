@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Div with Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .centered-div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none; /* Escondido inicialmente */
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .centered-div.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) translateY(0);
+        }
+
+        .centered-div.animate {
+            transform: translate(-50%, -60%);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none; /* Escondido inicialmente */
+        }
+
+        .btn-open {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-close {
+            padding: 5px 10px;
+            background-color: #FF0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto 0;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-open" onclick="openDiv()">Abrir Div</button>
+
+    <div class="overlay" id="overlay" onclick="closeDiv()"></div>
+
+    <div class="centered-div" id="centeredDiv">
+        <h2>Div Centralizada</h2>
+        <p>Esta div está centralizada na tela e aparece com uma animação.</p>
+        <button class="btn-close" onclick="closeDiv()">Fechar</button>
+    </div>
+
+    <script>
+        function openDiv() {
+            const centeredDiv = document.getElementById('centeredDiv');
+            const overlay = document.getElementById('overlay');
+            centeredDiv.style.display = 'block';
+            overlay.style.display = 'block';
+            requestAnimationFrame(() => {
+                centeredDiv.classList.add('show');
+                centeredDiv.classList.add('animate');
+            });
+        }
+
+        function closeDiv() {
+            const centeredDiv = document.getElementById('centeredDiv');
+            const overlay = document.getElementById('overlay');
+            centeredDiv.classList.remove('show');
+            overlay.style.display = 'none';
+            setTimeout(() => {
+                centeredDiv.style.display = 'none';
+                centeredDiv.classList.remove('animate');
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>

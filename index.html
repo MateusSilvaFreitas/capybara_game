@@ -6,6 +6,10 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <script src="./js/jquery-3.7.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <title>Capybara Game</title>
 </head>
 
@@ -13,12 +17,195 @@
     <div id="app">
         <div id="game-container">
 
+            
+
             <div style="display: flex; gap: 10px; position: fixed; top: 500px; right: 50px">
                 <div id="left-buttom" style="width: 75px; height: 75px; background-color: red;"></div>
                 <div id="right-buttom" style="width: 75px; height: 75px; background-color: aqua;"></div>
                 <div id="jump-buttom" style="width: 75px; height: 75px; background-color: blue;"></div>
             </div>
         </div>
+        <div id="capy-card-1" class="card">
+            <div class="card-content">
+                <div class="card-title">Idade</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-1-px.png" alt="Capivara">
+                </div>
+                <div class="card-description">
+                    Uma capivara adulta pode ser quase do tamanho de uma criança de 6 a 8 anos;
+                </div>
+                <button onclick="fechar()">Fechar</button>
+            </div>
+        </div>
+        
+        <div id="capy-card-2" class="card">
+            <div class="card-content">
+                <div class="card-title">Peso</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-2-px.png" alt="Capivara">
+                </div>
+                <div class="card-description">
+                    A capivara pode pesar entre 35 e 65 quilos, equivalente a carregar quatro ou cinco mochilas cheias de livros;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-3" class="card">
+            <div class="card-content">
+                <div class="card-title">Alimentação</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-3-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras são herbívoros que se alimentam principalmente de plantas, incluindo capim, folhas e plantas aquáticas como a alface d'água;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-4" class="card">
+            <div class="card-content">
+                <div class="card-title">Habitat</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-4-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras preferem viver perto da água em ambientes como rios, lagos e pântanos, onde podem nadar e se refrescar;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-5" class="card">
+            <div class="card-content">
+                <div class="card-title">Comportamento</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-5-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras são amigáveis, vivem em grandes grupos, emitem sons engraçados quando felizes e são ótimas nadadoras;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-6" class="card">
+            <div class="card-content">
+                <div class="card-title">Maternidade</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-6-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As mamães capivaras são "amas de leite" que cuidam dos filhotes umas das outras;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-7" class="card">
+            <div class="card-content">
+                <div class="card-title">Natação</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-7-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras nadam e ajudam a misturar a água, mantendo-a limpa e cheia de ar para os peixes respirarem;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-8" class="card">
+            <div class="card-content">
+                <div class="card-title">Fertilidade</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-8-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras também ajudam a fertilizar o solo. Quando elas fazem cocô na terra perto do rio, esse cocô funciona como um adubo natural;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-9" class="card">
+            <div class="card-content">
+                <div class="card-title">Caminhos</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-9-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    Quando as capivaras se movem nos matos ou rio, criam caminhos que beneficiam outros animais menores ao facilitar o acesso a comida e abrigo;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-10" class="card">
+            <div class="card-content">
+                <div class="card-title">Benefício para Pássaros</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-10-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    Os pássaros se beneficiam ao comer insetos das capivaras, enquanto as capivaras se livram da sujeira entre seus pelos;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-11" class="card">
+            <div class="card-content">
+                <div class="card-title">Pastoreio</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-11-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    Quando as capivaras pastam, expõem insetos escondidos na grama, beneficiando pássaros na busca de alimentos;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-12" class="card">
+            <div class="card-content">
+                <div class="card-title">Aquecimento</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-12-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    As capivaras são animais de sangue quente e mantêm os animais ao seu redor aquecidos durante o inverno rigoroso;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-13" class="card">
+            <div class="card-content">
+                <div class="card-title">Riscos Urbanos</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-13-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    Nas cidades, as capivaras podem entrar em contato com lixo e esgoto, que podem estar sujos e cheios de germes. Isso pode deixar as capivaras doentes e também as pessoas que vivem perto;
+                </div>
+            </div>
+        </div>
+        
+        <div id="capy-card-14" class="card">
+            <div class="card-content">
+                <div class="card-title">Sustentabilidade</div>
+                <div class="card-image">
+                    <img src="img/capy-card/px/capy-14-px.png" alt="Capivara">
+                </div>
+                </div>
+                <div class="card-description">
+                    Cuidar das capivaras é essencial para manter a sustentabilidade e o equilíbrio ecológico da nossa cidade.
+                </div>
+            </div>
+        </div>
+        
         
     </div>
     <script type="module" src="src/main.js"></script>
