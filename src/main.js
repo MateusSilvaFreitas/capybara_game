@@ -11,7 +11,6 @@ var bombs;
 var gameOver;
 
 
-
 var ballsCount = 2;
 var isPressedRight = false;
 var isPressedLeft = false;
@@ -44,20 +43,16 @@ $('#jump-buttom').on('mouseup touchend', function() {
     isPressedJump = false;
 });
 
+$('#jump-buttom').on('mouseup touchend', function() {
+    isPressedJump = false;
+});
 
-function fechar(){
-    if(paused && resume){
-        paused = false;
-        resume = false;
-        const centeredDiv = document.getElementById('centeredDiv');
-        centeredDiv.classList.remove('show');
-        setTimeout(() => {
-            centeredDiv.style.display = 'none';
-            centeredDiv.classList.remove('animate');
-        }, 300);
-        this.scene.resume();
-    }
-};
+$(".card").click(function() {
+    const centeredDiv = document.getElementById('capy-card-'+ cardCapyCollected);
+    centeredDiv.style.display = 'none';
+    game.isPaused = false;
+});
+
 
 
 
@@ -67,10 +62,10 @@ function fechar(){
 class CapyGame extends Phaser.Scene {
     preload ()
         {
-            this.load.image('background', '/img/background.png');
+            this.load.image('background', '/img/background-test.png');
             this.load.image('ground', '/img/ground-test.png');
             this.load.spritesheet('capy', '/img/capy.png', { frameWidth: 60, frameHeight: 48 });
-            this.load.spritesheet('coin', '/img/coin.png', { frameWidth: 24 , frameHeight: 25 });
+            this.load.spritesheet('coin', '/img/coin2.png', { frameWidth: 33 , frameHeight: 33 });
             this.load.spritesheet('card-capy', '/img/card-capy.png', { frameWidth: 28 , frameHeight: 35 });
             this.load.image('bomb', '/img/bomb.png');
         }
@@ -83,8 +78,8 @@ class CapyGame extends Phaser.Scene {
             createCardCapy(this);
 
             bombs = this.physics.add.group();
-            scoreText = this.add.text(16, 16, 'Pontos: 0', { fontSize: '32px', fill: '#000' });
-            capyCardCollectedText = this.add.text(380, 16, 'Cartas capivara: 0/14', { fontSize: '32px', fill: '#000' });
+            scoreText = this.add.text(16, 16, 'Pontos: 0', { fontSize: '32px', fill: '#000', fontFamily: "Matemasie" });
+            capyCardCollectedText = this.add.text(350, 16, 'Cartas de capivara: 0/14', { fontSize: '32px', fill: '#000', fontFamily: "Matemasie" });
 
             cursors = this.input.keyboard.createCursorKeys();
             this.physics.add.collider(player, platforms);
@@ -101,17 +96,21 @@ class CapyGame extends Phaser.Scene {
             this.physics.add.overlap(player, cardCapy, (player, card) => {
                 card.disableBody(true, true);
                 cardCapyCollected += 1;
-                capyCardCollectedText.setText('Cartas capivara: ' + cardCapyCollected + "/14");
-                // this.scene.pause();
+                capyCardCollectedText.setText('Cartas de capivara: ' + cardCapyCollected + "/14");
+                game.isPaused = true;
 
-                // const centeredDiv = document.getElementById('capy-card-'+ cardCapyCollected);
-                // centeredDiv.style.display = 'block';
+                const centeredDiv = document.getElementById('capy-card-'+ cardCapyCollected);
+                centeredDiv.style.display = 'block';
                             
-                // requestAnimationFrame(() => {
-                //     centeredDiv.classList.add('show');
-                //     centeredDiv.classList.add('animate');
-                // });
-
+                requestAnimationFrame(() => {
+                    centeredDiv.classList.add('show');
+                    centeredDiv.classList.add('animate');
+                });
+                if(cardCapyCollected == 14){
+                    cardCapy.children.iterate((child) => {
+                        child.disableBody(true, true);
+                })
+                }
             }, null, this);
         }
 
@@ -139,18 +138,21 @@ function collectCoin (player, coin){
             }  
         })
 
-        cardCapy.children.iterate((child) => {
-                child.enableBody(true, child.x, 0, true, true);
-                childCoinDefault(child);
-                child.anims.play('rotate-card-capy', true)
-        })
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-        var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-    
+        if(cardCapyCollected < 14){
+                cardCapy.children.iterate((child) => {
+                    child.enableBody(true, child.x, 0, true, true);
+                    childCoinDefault(child);
+                    child.anims.play('rotate-card-capy', true)
+            })
+        }
+        
+        if(bombs.children.size == 0){
+            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            var bomb = bombs.create(x, 16, 'bomb');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-100, 100), 20);
+        }
     }
 }
 
@@ -178,7 +180,7 @@ const createBackgroundAndPlatform = (bind) => {
     platforms = bind.physics.add.staticGroup();
     //ground
     platforms.create(0, 600, 'ground').setScale(3).refreshBody();
-    platforms.create(850, 600, 'ground').setScale(3).refreshBody();
+    platforms.create(500, 600, 'ground').setScale(3).refreshBody();
     //right
     platforms.create(600, 100, 'ground');
     platforms.create(700, 300, 'ground');
@@ -187,8 +189,8 @@ const createBackgroundAndPlatform = (bind) => {
     platforms.create(100, 300, 'ground');
     platforms.create(100, 500, 'ground');
     //middle
-    platforms.create(350, 400, 'ground');
     platforms.create(350, 195, 'ground');
+    platforms.create(350, 400, 'ground');
 }
 
 const createPlayer = (bind) => {
