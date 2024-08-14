@@ -171,7 +171,7 @@ function collectCoin (player, coin){
             })
         }
         
-        if(bombs.children.size == 0){
+        if(bombs.children.size == 0 || cardCapyCollected == 14){
             var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
             var bomb = bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
@@ -245,7 +245,7 @@ const createPlayer = (bind) => {
 const createCoins = (bind) => {
     coins = bind.physics.add.group({
         key: 'coin',
-        repeat: 7,
+        repeat: 3,
     });
 
     bind.anims.create({
