@@ -71,16 +71,16 @@ $('#btn-restart').on('click', function() {
 class CapyGame extends Phaser.Scene {
     preload ()
         {
-            this.load.image('background', '/img/background-game.png');
-            this.load.image('ground', '/img/ground.png');
-            this.load.spritesheet('capy', '/img/capy.png', { frameWidth: 60, frameHeight: 48 });
-            this.load.spritesheet('coin', '/img/coin.png', { frameWidth: 33 , frameHeight: 33 });
-            this.load.spritesheet('card-capy', '/img/card-capy.png', { frameWidth: 28 , frameHeight: 35 });
-            this.load.image('bomb', '/img/bomb.png');
-            this.load.audio('collect-coin', ['/audio/coin-collected-sound.wav']);
-            this.load.audio('theme', ['/audio/Kevin MacLeod - Pixelland.mp3']);
-            this.load.audio('collect-card', ['/audio/card-collected-sound.wav']);
-            this.load.audio('death-sound', ['/audio/death-sound.wav']);
+            this.load.image('background', './img/background-game.png');
+            this.load.image('ground', './img/ground.png');
+            this.load.spritesheet('capy', './img/capy.png', { frameWidth: 60, frameHeight: 48 });
+            this.load.spritesheet('coin', './img/coin.png', { frameWidth: 33 , frameHeight: 33 });
+            this.load.spritesheet('card-capy', './img/card-capy.png', { frameWidth: 28 , frameHeight: 35 });
+            this.load.image('bomb', './img/bomb.png');
+            this.load.audio('collect-coin', ['./audio/coin-collected-sound.wav']);
+            this.load.audio('theme', ['./audio/Kevin MacLeod - Pixelland.mp3']);
+            this.load.audio('collect-card', ['./audio/card-collected-sound.wav']);
+            this.load.audio('death-sound', ['./audio/death-sound.wav']);
         }
 
         create ()
