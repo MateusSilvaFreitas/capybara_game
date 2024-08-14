@@ -250,7 +250,7 @@ const createCoins = (bind) => {
 
     bind.anims.create({
         key: 'rotate',
-        frames: bind.anims.generateFrameNumbers('coin', { start: 0, end: 9 }),
+        frames: bind.anims.generateFrameNumbers('coin', { start: 0, end: 11 }),
         frameRate: 10,
         repeat: -1
     });
