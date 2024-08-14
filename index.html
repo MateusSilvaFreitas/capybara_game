@@ -15,16 +15,7 @@
 
 <body>
     <div id="app">
-        <div id="game-container">
-
-            
-
-            <div style="display: flex; gap: 10px; position: fixed; top: 500px; right: 50px">
-                <div id="left-buttom" style="width: 75px; height: 75px; background-color: red;"></div>
-                <div id="right-buttom" style="width: 75px; height: 75px; background-color: aqua;"></div>
-                <div id="jump-buttom" style="width: 75px; height: 75px; background-color: blue;"></div>
-            </div>
-        </div>
+        <div id="game-container" />
         <div id="capy-card-1" class="card">
             <div class="card-content">
                 <div class="card-title">Idade</div>
@@ -206,6 +197,23 @@
         </div>
         
         
+    </div>
+    <div class="arrow-container" style="display: none;">
+        <div id="jump-buttom" class="arrow-button up-arrow"></div>
+        <div style="display: flex; gap: 20px;">
+            <div id="left-buttom" class="arrow-button left-arrow"></div>
+            <div id="right-buttom" class="arrow-button right-arrow"></div>                
+        </div>
+    </div>
+
+    <div id="container-end">
+        <div class="info-end">
+            <h2>Game over!</h4>
+            <p>Informações do Jogo:</p>
+            <span id="end-score">Pontos: 10000</span>
+            <span id="end-cards-collected">Cartas coletadas: 10</span>
+        </div>
+        <button class="btn-restart" id="btn-restart">Jogar Novamente</button>
     </div>
     <script type="module" src="src/main.js"></script>
 </body>

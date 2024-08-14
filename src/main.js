@@ -1,3 +1,10 @@
+$(document).ready(function() {
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        $(".arrow-container").show();
+    }
+});
+
+
 var platforms;
 var player;
 var cursors;
@@ -10,6 +17,9 @@ var capyCardCollectedText;
 var bombs;
 var gameOver;
 
+var collectCoinSound;
+var collectCardSound;
+var deathSound;
 
 var ballsCount = 2;
 var isPressedRight = false;
@@ -53,25 +63,33 @@ $(".card").click(function() {
     game.isPaused = false;
 });
 
-
-
-
-
+$('#btn-restart').on('click', function() {
+    location.reload();
+});
 
 
 class CapyGame extends Phaser.Scene {
     preload ()
         {
-            this.load.image('background', '/img/background-test.png');
-            this.load.image('ground', '/img/ground-test.png');
+            this.load.image('background', '/img/background-game.png');
+            this.load.image('ground', '/img/ground.png');
             this.load.spritesheet('capy', '/img/capy.png', { frameWidth: 60, frameHeight: 48 });
-            this.load.spritesheet('coin', '/img/coin2.png', { frameWidth: 33 , frameHeight: 33 });
+            this.load.spritesheet('coin', '/img/coin.png', { frameWidth: 33 , frameHeight: 33 });
             this.load.spritesheet('card-capy', '/img/card-capy.png', { frameWidth: 28 , frameHeight: 35 });
             this.load.image('bomb', '/img/bomb.png');
+            this.load.audio('collect-coin', ['/audio/coin-collected-sound.wav']);
+            this.load.audio('theme', ['/audio/Kevin MacLeod - Pixelland.mp3']);
+            this.load.audio('collect-card', ['/audio/card-collected-sound.wav']);
+            this.load.audio('death-sound', ['/audio/death-sound.wav']);
         }
 
         create ()
         {
+            collectCoinSound = this.sound.add('collect-coin');
+            collectCardSound = this.sound.add('collect-card');
+            deathSound = this.sound.add('death-sound');
+            this.sound.add('theme').play()
+
             createBackgroundAndPlatform(this);
             createPlayer(this);
             createCoins(this);
@@ -88,13 +106,15 @@ class CapyGame extends Phaser.Scene {
             this.physics.add.collider(bombs, platforms);
             this.physics.add.collider(player, bombs, (player, bomb) => {
                 this.scene.pause();
+                deathSound.play();
                 player.setTint(0xff0000);
                 player.anims.play('turn');
-                gameOver = true;
+                finalizeGame();
             }, null, this);
             this.physics.add.overlap(player, coins, collectCoin, null, this);
             this.physics.add.overlap(player, cardCapy, (player, card) => {
                 card.disableBody(true, true);
+                collectCardSound.play();
                 cardCapyCollected += 1;
                 capyCardCollectedText.setText('Cartas de capivara: ' + cardCapyCollected + "/14");
                 game.isPaused = true;
@@ -115,13 +135,13 @@ class CapyGame extends Phaser.Scene {
         }
 
         update(){
-            if (gameOver) return;
             checkMove();
         }
 }
 
 function collectCoin (player, coin){
     coin.disableBody(true, true);
+    collectCoinSound.play();
     score += 1500;
     scoreText.setText('Pontos: ' + score);
     if(coins.countActive(true) == 0){
@@ -270,6 +290,12 @@ const childCoinDefault = (child) => {
     child.y = Phaser.Math.Between(0, 450);
 }
 
+const finalizeGame = () => {
+    $('#end-score').text('Pontos: ' + score);
+    $('#end-cards-collected').text('Cartas Coletadas: ' + cardCapyCollected);
+    $("#container-end").show()
+}
+
 const config = {
     type: Phaser.AUTO,
     width: 800,
@@ -280,7 +306,8 @@ const config = {
         arcade: {
             gravity: { y: 200 }
         }
-    }
+    },
+    scaleMode: Phaser.Scale.FIT
 };
 
 const game = new Phaser.Game(config);
