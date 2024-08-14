@@ -6,14 +6,14 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url("./background-web.jpg");
+    background-image: url("https://mateussilvafreitas.github.io/capybara_game/background-web.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 @media (max-width: 768px) {
     body {
-        background-image: url('./background-mobile.jpg'); /* Imagem de fundo para mobile */
+        background-image: url('https://mateussilvafreitas.github.io/capybara_game/background-mobile.jpg');
     }
 }
 
