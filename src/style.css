@@ -6,14 +6,14 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url("./img/background-web.jpg");
+    background-image: url("img/background-web.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 @media (max-width: 768px) {
     body {
-        background-image: url('./img/background-mobile.jpg'); /* Imagem de fundo para mobile */
+        background-image: url('img/background-mobile.jpg'); /* Imagem de fundo para mobile */
     }
 }
 
