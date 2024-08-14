@@ -86,9 +86,14 @@ class CapyGame extends Phaser.Scene {
         create ()
         {
             collectCoinSound = this.sound.add('collect-coin');
+            collectCoinSound.setVolume(0.2);
             collectCardSound = this.sound.add('collect-card');
+            collectCardSound.setVolume(0.2);
             deathSound = this.sound.add('death-sound');
-            this.sound.add('theme').play()
+            deathSound.setVolume(0.2);
+            const theme = this.sound.add('theme');
+            theme.setVolume(0.1);
+            theme.play()
 
             createBackgroundAndPlatform(this);
             createPlayer(this);
