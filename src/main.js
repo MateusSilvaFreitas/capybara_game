@@ -71,7 +71,7 @@ $('#btn-restart').on('click', function() {
 class CapyGame extends Phaser.Scene {
     preload ()
         {
-            this.load.image('background', './img/background-game.png');
+            this.load.image('background', './img/background-game-blu.png');
             this.load.image('ground', './img/ground.png');
             this.load.spritesheet('capy', './img/capy.png', { frameWidth: 60, frameHeight: 48 });
             this.load.spritesheet('coin', './img/coin.png', { frameWidth: 33 , frameHeight: 33 });
